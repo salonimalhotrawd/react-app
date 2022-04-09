@@ -9,8 +9,8 @@ class App extends Component {
   state = {
     title: 'React Complete Guide - 2022',
     persons: [
-      { name: 'Saloni Malhotra', age: 27 },
-      { name: 'Anmol Dogra', age: 28 }
+      { id:'1', name: 'Saloni Malhotra', age: 27 },
+      { id:'2', name: 'Anmol Dogra', age: 28 }
     ],
     designation: 'My Designation is Senior Associate Lead',
     showPersonList: false
@@ -23,6 +23,21 @@ class App extends Component {
   togglePersonComp = () => {
     const showList = this.state.showPersonList;
     this.setState({ showPersonList: !showList });
+  }
+
+  /**
+   * @method nameChangeHandler
+   * nameChangeHandler method and update the state
+  */
+  nameChangeHandler = (event,id) => {
+    const personIndex = this.state.persons.findIndex((person) => {return person.id == id});
+    if(personIndex >= 0){
+      let person = {...this.state.persons[personIndex]};
+      person.name = event.target.value;
+      let originalPersons = [...this.state.persons]
+      originalPersons[personIndex] = person;
+      this.setState({persons:originalPersons});
+    }
   }
 
   /**
@@ -62,7 +77,14 @@ class App extends Component {
         <div>
           {
             this.state.persons.map((person,index) => {
-              return( <Person name={person.name} age={person.age} click={() => this.deletePersonHandler(index)}/>)
+              return( 
+                <Person 
+                  name={person.name} 
+                  age={person.age} 
+                  key={person.id}
+                  click={() => this.deletePersonHandler(index)}
+                  changed={(event) => this.nameChangeHandler(event,person.id)}/>
+               )
             })
           }
         </div>
