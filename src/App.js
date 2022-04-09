@@ -3,6 +3,9 @@ import './App.css';
 import Person from './Person/Person';
 
 class App extends Component{
+  /**
+   * State property is only access in the class based component
+   */
   state = {
     persons : [
       {name: 'Saloni Malhotra', age : 27},
@@ -11,10 +14,29 @@ class App extends Component{
 
     designation : 'My Designation is Senior Associate Lead'
   }
+
+  /**
+   * @method switchCaseHandler
+   * @this refers to the class this
+   */
+  switchCaseHandler = () => {
+    console.log('I was clicked', this);
+  }
+
+  /**
+   * @method switchCaseHandler
+   * In this tradional function method the scope of this is undefined
+   */
+  // switchCaseHandler(){
+  //   console.log(this, 'I was clicked');
+  // }
+
+
   render(){
     return (
       <div className='App'>
         Hi, I'm a React app
+        <button className='btn btn-primary' onClick={this.switchCaseHandler}>Switch Case</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age}/>
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>{this.state.designation}</Person>
       </div>
