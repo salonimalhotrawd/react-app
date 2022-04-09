@@ -24,7 +24,7 @@ class App extends Component {
      * @setState Method is provided by the react to update the new State
      * This method basically merge the old state with the new state without hmapering the other state properties and values
     */
-
+    //DON"T DO THIS: this.state.persons[1].name = 'Anmol Bharat Dogra'
     this.setState({
       persons: [{
         name: 'Saloni Malhotra',
