@@ -12,7 +12,8 @@ class App extends Component {
       { name: 'Saloni Malhotra', age: 27 },
       { name: 'Anmol Dogra', age: 28 }
     ],
-    designation: 'My Designation is Senior Associate Lead'
+    designation: 'My Designation is Senior Associate Lead',
+    showPersonList:false
   }
 
   /**
@@ -55,6 +56,15 @@ class App extends Component {
       }]
     })
   }
+ 
+  /**
+   * @method togglePersonComp
+   * toggle Person List
+   */
+  togglePersonComp = () => {
+    const showList = this.state.showPersonList;
+    this.setState({showPersonList : !showList});
+  }
 
   render() {
     // In React we can also do inline-styling.For that we will have to create js object and then wrap dynamically 
@@ -64,34 +74,37 @@ class App extends Component {
     //must be wrap with the single and dbl commas to render it on the UI
 
     const style = {
-      backgroundColor:'#10afa0',
-      font:'inherit',
-      border:'1px solid #10afa0',
-      padding:'8px',
-      cursor:'pointer',
-      'border-radius':'0 15%'
+      backgroundColor: '#10afa0',
+      font: 'inherit',
+      border: '1px solid #10afa0',
+      padding: '8px',
+      cursor: 'pointer'
     }
-    
+
     return (
       <div className='App'>
         <h4>{this.state.title}</h4>
         {/* This is the tradional way of passing the parameters in the method and it is also the
         efficient way.It is cld function borrowing */}
-        <button 
-           style={style}
-           onClick={this.switchCaseHandler.bind(this, 'Anmol Bharat Dogra')}>Switch Case
+        <button
+          style={style}
+          onClick={this.togglePersonComp}>Toggle Person
         </button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          changed={this.nameChangedHandler} />
+        {this.state.showPersonList ? 
+          <div>
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age}
+              changed={this.nameChangedHandler} />
 
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
-          {this.state.designation}
-        </Person>
+            <Person
+              name={this.state.persons[1].name}
+              age={this.state.persons[1].age}
+              click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
+              {this.state.designation}
+            </Person>
+          </div> : null
+        }         
       </div>
     )
   }
