@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
-class App extends Component{
+class App extends Component {
   /**
    * State property is only access in the class based component
    */
   state = {
-    persons : [
-      {name: 'Saloni Malhotra', age : 27},
-      {name: 'Anmol Dogra', age : 28}
+    title: 'React Complete Guide - 2022',
+    persons: [
+      { name: 'Saloni Malhotra', age: 27 },
+      { name: 'Anmol Dogra', age: 28 }
     ],
-
-    designation : 'My Designation is Senior Associate Lead'
+    designation: 'My Designation is Senior Associate Lead'
   }
 
   /**
@@ -20,7 +20,23 @@ class App extends Component{
    * @this refers to the class this
    */
   switchCaseHandler = () => {
-    console.log('I was clicked', this);
+    /**
+     * @setState Method is provided by the react to update the new State
+     * This method basically merge the old state with the new state without hmapering the other state properties and values
+    */
+
+    this.setState({
+      persons: [{
+        name: 'Saloni Malhotra',
+        age: 27
+      },
+      {
+        name: 'Anmol Bharat Dogra',
+        age: 28
+      }
+      ],
+      designation: 'My Designation is Senior Project Manager'
+    })
   }
 
   /**
@@ -32,12 +48,12 @@ class App extends Component{
   // }
 
 
-  render(){
+  render() {
     return (
       <div className='App'>
-        Hi, I'm a React app
+        <h4>{this.state.title}</h4>
         <button className='btn btn-primary' onClick={this.switchCaseHandler}>Switch Case</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}/>
+        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>{this.state.designation}</Person>
       </div>
     )
