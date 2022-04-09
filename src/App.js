@@ -57,12 +57,30 @@ class App extends Component {
   }
 
   render() {
+    // In React we can also do inline-styling.For that we will have to create js object and then wrap dynamically 
+    // it with the style property provided by the JSX
+    //POINT TO REMEBER: We cannot use directly css property in the inline-style.We have to use the camelCase to define
+    //the style property or we have to wrap the property with the single and dbl commas and also the property value
+    //must be wrap with the single and dbl commas to render it on the UI
+
+    const style = {
+      backgroundColor:'#10afa0',
+      font:'inherit',
+      border:'1px solid #10afa0',
+      padding:'8px',
+      cursor:'pointer',
+      'border-radius':'0 15%'
+    }
+    
     return (
       <div className='App'>
         <h4>{this.state.title}</h4>
         {/* This is the tradional way of passing the parameters in the method and it is also the
         efficient way.It is cld function borrowing */}
-        <button className='btn btn-primary' onClick={this.switchCaseHandler.bind(this, 'Anmol Bharat Dogra')}>Switch Case</button>
+        <button 
+           style={style}
+           onClick={this.switchCaseHandler.bind(this, 'Anmol Bharat Dogra')}>Switch Case
+        </button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age}
