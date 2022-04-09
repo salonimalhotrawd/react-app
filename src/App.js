@@ -17,53 +17,22 @@ class App extends Component {
   }
 
   /**
-   * @method switchCaseHandler
-   * @this refers to the class this
-   */
-  switchCaseHandler = (newName) => {
-    /**
-     * @setState Method is provided by the react to update the new State
-     * This method basically merge the old state with the new state without hmapering the other state properties and values
-    */
-    //DON"T DO THIS: this.state.persons[1].name = 'Anmol Bharat Dogra'
-    this.setState({
-      persons: [{
-        name: 'Saloni Malhotra',
-        age: 27
-      },
-      {
-        name: newName,
-        age: 28
-      }
-      ],
-      designation: 'My Designation is Senior Project Manager'
-    })
-  }
-
-  /**
-   * @method nameChangedHandler
-   * @param {*} event conatins event value
-   */
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [{
-        name: event.target.value,
-        age: 27
-      },
-      {
-        name: 'Anmol Bharat Dogra',
-        age: 29
-      }]
-    })
-  }
-
-  /**
    * @method togglePersonComp
    * toggle Person List
-   */
+  */
   togglePersonComp = () => {
     const showList = this.state.showPersonList;
     this.setState({ showPersonList: !showList });
+  }
+
+  /**
+   * @method deletePersonHandler
+   * @param {*} personIndex 
+   */
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex,1);
+    this.setState({persons:persons});
   }
 
   render() {
@@ -86,17 +55,11 @@ class App extends Component {
     if (this.state.showPersonList) {
       person = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            changed={this.nameChangedHandler} />
-
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
-            {this.state.designation}
-          </Person>
+          {
+            this.state.persons.map((person,index) => {
+              return( <Person name={person.name} age={person.age} click={() => this.deletePersonHandler(index)}/>)
+            })
+          }
         </div>
       )
     }
