@@ -13,7 +13,7 @@ class App extends Component {
       { name: 'Anmol Dogra', age: 28 }
     ],
     designation: 'My Designation is Senior Associate Lead',
-    showPersonList:false
+    showPersonList: false
   }
 
   /**
@@ -56,14 +56,14 @@ class App extends Component {
       }]
     })
   }
- 
+
   /**
    * @method togglePersonComp
    * toggle Person List
    */
   togglePersonComp = () => {
     const showList = this.state.showPersonList;
-    this.setState({showPersonList : !showList});
+    this.setState({ showPersonList: !showList });
   }
 
   render() {
@@ -90,7 +90,10 @@ class App extends Component {
           style={style}
           onClick={this.togglePersonComp}>Toggle Person
         </button>
-        {this.state.showPersonList ? 
+
+        {/* If you have large application it is really difficult to handle everything on the basis 
+        of the ternary operator.Because it makes your code complex to understand and handle */}
+        {this.state.showPersonList ?
           <div>
             <Person
               name={this.state.persons[0].name}
@@ -104,7 +107,7 @@ class App extends Component {
               {this.state.designation}
             </Person>
           </div> : null
-        }         
+        }
       </div>
     )
   }
