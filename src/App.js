@@ -40,13 +40,21 @@ class App extends Component {
   }
 
   /**
-   * @method switchCaseHandler
-   * In this tradional function method the scope of this is undefined
+   * @method nameChangedHandler
+   * @param {*} event conatins event value
    */
-  // switchCaseHandler(){
-  //   console.log(this, 'I was clicked');
-  // }
-
+  nameChangedHandler = (event) => {
+    this.setState({
+      persons: [{
+        name: event.target.value,
+        age: 27
+      },
+      {
+        name: 'Anmol Bharat Dogra',
+        age: 29
+      }]
+    })
+  }
 
   render() {
     return (
@@ -54,34 +62,20 @@ class App extends Component {
         <h4>{this.state.title}</h4>
         {/* This is the tradional way of passing the parameters in the method and it is also the
         efficient way.It is cld function borrowing */}
-        <button className='btn btn-primary' onClick={this.switchCaseHandler.bind(this,'Anmol Bharat Dogra')}>Switch Case</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} />
+        <button className='btn btn-primary' onClick={this.switchCaseHandler.bind(this, 'Anmol Bharat Dogra')}>Switch Case</button>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+          changed={this.nameChangedHandler} />
 
-        {/* The Second way of passing the reference to the function is arrow function which basically takes an
-        anonmoyous function and return the response of the handler method but this is the inefficient method
-        as sometimes react render the application too often so try to use the bind approach as much as you can */}
-        <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age} 
-            click={this.switchCaseHandler.bind(this,'Anmol!!!!')}>
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+          click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
           {this.state.designation}
         </Person>
       </div>
     )
-
-    /**
-     * This is what the code represent during compilation process in the React.
-     * We can pass the infinite number of parameters in the createElement Method
-     * 3 Paramters is mandatory
-     * First paramter represents the HTML element
-     * Second parameter represents the Object
-     * Third parameter represents the Message to display on to the UI
-     */
-    // return(
-    //   React.createElement('div',{className:'App'},React.createElement('h1',null, 'Hi, I/m a React app!!!!'))
-    // )
   }
 }
 
