@@ -13,7 +13,7 @@ class App extends Component {
       { name: 'Anmol Dogra', age: 28 }
     ],
     designation: 'My Designation is Senior Associate Lead',
-    showPersonList:false
+    showPersonList: false
   }
 
   /**
@@ -56,14 +56,14 @@ class App extends Component {
       }]
     })
   }
- 
+
   /**
    * @method togglePersonComp
    * toggle Person List
    */
   togglePersonComp = () => {
     const showList = this.state.showPersonList;
-    this.setState({showPersonList : !showList});
+    this.setState({ showPersonList: !showList });
   }
 
   render() {
@@ -81,30 +81,34 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    //Whenever something is update in the state render methods render automatically.
+    let person = null;
+    if (this.state.showPersonList) {
+      person = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            changed={this.nameChangedHandler} />
+
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
+            {this.state.designation}
+          </Person>
+        </div>
+      )
+    }
+    
     return (
       <div className='App'>
         <h4>{this.state.title}</h4>
-        {/* This is the tradional way of passing the parameters in the method and it is also the
-        efficient way.It is cld function borrowing */}
         <button
           style={style}
           onClick={this.togglePersonComp}>Toggle Person
         </button>
-        {this.state.showPersonList ? 
-          <div>
-            <Person
-              name={this.state.persons[0].name}
-              age={this.state.persons[0].age}
-              changed={this.nameChangedHandler} />
-
-            <Person
-              name={this.state.persons[1].name}
-              age={this.state.persons[1].age}
-              click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
-              {this.state.designation}
-            </Person>
-          </div> : null
-        }         
+        {person}
       </div>
     )
   }
