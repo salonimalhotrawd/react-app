@@ -30,7 +30,12 @@ class App extends Component {
    * @param {*} personIndex 
    */
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    //In JavaScript arrays and objects are referenced type so whenever we do manipulation we have to 
+    //make the copy first then perform the OfflineAudioCompletionEvent otherwise it will update the 
+    //actual State.
+
+    //const persons = this.state.persons.slice;
+    const persons = [...this.state.persons];
     persons.splice(personIndex,1);
     this.setState({persons:persons});
   }
