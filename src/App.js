@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium';
+import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
 
 class App extends Component {
   /**
@@ -78,7 +80,11 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid #10afa0',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor : 'red',
+        color:'white'
+      }
     }
 
     //Whenever something is update in the state render methods render automatically.
@@ -99,11 +105,23 @@ class App extends Component {
           </Person>
         </div>
       )
+      style.backgroundColor = 'yellow';
+      style[':hover'] = {
+        backgroundColor : 'aqua',
+        color:'white'
+      }
     }
-    
+
+    const classes = [];
+
+    if(this.state.persons.length > 0){
+      classes.push('red', 'size', 'weight');
+    }
+
     return (
       <div className='App'>
-        <h4>{this.state.title}</h4>
+        <span className={classes.join(' ')}>{this.state.title}</span>
+        <br/>
         <button
           style={style}
           onClick={this.togglePersonComp}>Toggle Person
@@ -114,4 +132,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
