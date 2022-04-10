@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium';
-import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
+import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   /**
@@ -119,15 +118,17 @@ class App extends Component {
     }
 
     return (
-      <div className='App'>
-        <span className={classes.join(' ')}>{this.state.title}</span>
-        <br/>
-        <button
-          style={style}
-          onClick={this.togglePersonComp}>Toggle Person
-        </button>
-        {person}
-      </div>
+      <StyleRoot>
+        <div className='App'>
+          <span className={classes.join(' ')}>{this.state.title}</span>
+          <br />
+          <button
+            style={style}
+            onClick={this.togglePersonComp}>Toggle Person
+          </button>
+          {person}
+        </div>
+      </StyleRoot>
     )
   }
 }

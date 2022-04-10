@@ -1,5 +1,6 @@
 import React from "react";
 import './Person.css';
+import Radium from 'radium';
 
 /**
  * @Components Components are awesome.because we can focus our code each file 
@@ -20,15 +21,22 @@ import './Person.css';
  */
 
 const person = (props) => {
+    const style = {
+        '@media (min-width:500px)': {
+            width: '450px',
+            backgroundColor:'black',
+            color:'white'
+        }
+    }
     return (
-        <div className="Person" onClick={props.click}>
+        <div className="Person" style={style} onClick={props.click}>
             <p>My name is {props.name} and I am {props.age} years old.</p>
             <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name}/>
+            <input type="text" onChange={props.changed} value={props.name} />
         </div>
     )
 }
-export default person;
+export default Radium(person);
 
 
 
