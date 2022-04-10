@@ -1,42 +1,33 @@
 import React from "react";
-import './Person.css';
-import Radium from 'radium';
+import styled from "styled-components";
 
-/**
- * @Components Components are awesome.because we can focus our code each file 
- * hence, it makes much more maintainable not put everything into app.js file. 
- * For Bigger app it is really crowded if we put everything into the main root file
- * Also,Components are reusable and reconfigurable
- */
-
-/**
- * @props props refers to the properties which we passed into the function and the class
- * We can use props to get the dynamic content from it which we passed from one component to another
- * In case of class we will use `this.props` to access the properties and its values
- */
-
-/**
- * @props children basically reserved words. Children refers to any elements between the opening and closing tag of the component
- * We can pass the complex code and plain HTML text inside it too
- */
-
-const person = (props) => {
-    const style = {
-        '@media (min-width:500px)': {
-            width: '450px',
-            backgroundColor:'black',
-            color:'white'
-        }
+const StyledComponents = styled.div`
+    {
+        width:60%;
+        margin:1rem auto;
+        border:1px solid #eee;
+        box-shadow:0 2px 3px #ccc;
+        padding: 16px;
+        text-align: center;
     }
+
+
+    @media (min-width:500px) {
+        color: white;
+        width: 450px;
+        background-color: black;
+    }
+`
+const person = (props) => {
     return (
-        <div className="Person" style={style} onClick={props.click}>
+        <StyledComponents onClick={props.click}>
             <p>My name is {props.name} and I am {props.age} years old.</p>
             <p>{props.children}</p>
             <input type="text" onChange={props.changed} value={props.name} />
-        </div>
+        </StyledComponents>
     )
 }
-export default Radium(person);
+export default person;
 
 
 

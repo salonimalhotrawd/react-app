@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium, {StyleRoot} from 'radium';
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+    background-color: ${props => props.alt ? 'green' : '#10afa0'};
+    color:white;
+    font:inherit;
+    border:1px solid #10afa0;
+    padding:8px;
+    cursor:pointer;
+
+    &:hover{
+      background-color: ${props => props.alt ? 'purple' : 'red'};;
+      color:white;
+    }
+`;
 
 class App extends Component {
   /**
@@ -75,15 +89,7 @@ class App extends Component {
     //must be wrap with the single and dbl commas to render it on the UI
 
     const style = {
-      backgroundColor: '#10afa0',
-      font: 'inherit',
-      border: '1px solid #10afa0',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor : 'red',
-        color:'white'
-      }
+
     }
 
     //Whenever something is update in the state render methods render automatically.
@@ -104,33 +110,25 @@ class App extends Component {
           </Person>
         </div>
       )
-      style.backgroundColor = 'yellow';
-      style[':hover'] = {
-        backgroundColor : 'aqua',
-        color:'white'
-      }
     }
 
     const classes = [];
 
-    if(this.state.persons.length > 0){
+    if (this.state.persons.length > 0) {
       classes.push('red', 'size', 'weight');
     }
 
     return (
-      <StyleRoot>
-        <div className='App'>
-          <span className={classes.join(' ')}>{this.state.title}</span>
-          <br />
-          <button
-            style={style}
-            onClick={this.togglePersonComp}>Toggle Person
-          </button>
-          {person}
-        </div>
-      </StyleRoot>
+      <div className='App'>
+        <span className={classes.join(' ')}>{this.state.title}</span>
+        <br />
+        <StyledButton alt={this.state.showPersonList} onClick={this.togglePersonComp}>
+          Toggle Persons
+        </StyledButton>
+        {person}
+      </div>
     )
   }
 }
 
-export default Radium(App);
+export default App;
