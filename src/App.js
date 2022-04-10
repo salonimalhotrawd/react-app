@@ -1,104 +1,108 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 
 class App extends Component {
-  /**
-   * State property is only access in the class based component
-   */
   state = {
-    title: 'React Complete Guide - 2022',
-    persons: [
-      { id:'1', name: 'Saloni Malhotra', age: 27 },
-      { id:'2', name: 'Anmol Dogra', age: 28 }
-    ],
-    designation: 'My Designation is Senior Associate Lead',
-    showPersonList: false
+    title: 'React Pracitce',
+    compName1: 'UserInput Section',
+    compName2: 'UserOutput Section',
+    addingParaInputTitle: 'Add Para Dynamically',
+    paraText: [
+      { id: 1, paraText1: 'I am 27 years old', paraText2: 'I am Senior Software Engineer' },
+      { id: 2, paraText1: 'I am 28 years old', paraText2: 'I am Senior Project Manager' }
+    ]
   }
 
   /**
-   * @method togglePersonComp
-   * toggle Person List
-  */
-  togglePersonComp = () => {
-    const showList = this.state.showPersonList;
-    this.setState({ showPersonList: !showList });
+   * @method inputUserChanged
+   * @param {*} event conatins target value
+   */
+  inputUserChanged = (event) => {
+    const newTitle = event.target.value;
+    this.setState({title:newTitle})
   }
 
   /**
-   * @method nameChangeHandler
-   * nameChangeHandler method and update the state
-  */
-  nameChangeHandler = (event,id) => {
-    const personIndex = this.state.persons.findIndex((person) => {return person.id == id});
-    if(personIndex >= 0){
-      let person = {...this.state.persons[personIndex]};
-      person.name = event.target.value;
-      let originalPersons = [...this.state.persons]
-      originalPersons[personIndex] = person;
-      this.setState({persons:originalPersons});
+   * @method addParaText
+   * @param {*} event contains event target value
+   * @param {*} paraId contains the id of the paragraph
+   */
+  editParaText = (event, paraId) => {
+    if (event.target.value) {
+      const paraTextList = [...this.state.paraText];
+      const paraIndexFound = paraTextList.findIndex(pt => { return pt.id == paraId });
+      if (paraIndexFound >= 0) {
+        const paraFound = paraTextList[paraIndexFound];
+        paraFound.paraText2 = event.target.value;
+        this.setState({ paraText: paraTextList });
+      }
     }
   }
 
   /**
-   * @method deletePersonHandler
-   * @param {*} personIndex 
+   * @method removePara
+   * @param {*} paraId contains unique id of the element
    */
-  deletePersonHandler = (personIndex) => {
-    //In JavaScript arrays and objects are referenced type so whenever we do manipulation we have to 
-    //make the copy first then perform the OfflineAudioCompletionEvent otherwise it will update the 
-    //actual State.
-
-    //const persons = this.state.persons.slice;
-    const persons = [...this.state.persons];
-    persons.splice(personIndex,1);
-    this.setState({persons:persons});
+  removeParaText = (paraId) => {
+    const paraTextList = [...this.state.paraText];
+    const paraIndexFound = paraTextList.findIndex(pt => { return pt.id == paraId });
+    if (paraIndexFound >= 0) {
+      paraTextList.splice(paraIndexFound,1)
+      this.setState({ paraText: paraTextList });
+    }
   }
+
+  /**
+   * @method paraChanged
+   * Dynamically append paras and show into the output component
+   * @param {*} event contains the event value
+   */
+  paraChanged = (event) => {
+    if (event.target.value) {
+      const paraId = this.state.paraText.length + 1;
+      const paraObj = {
+        id: paraId,
+        paraText1: event.target.value,
+        paraText2: 'Adding ' + paraId + ' custom Para Dynamically'
+      }
+      let newParaList = [...this.state.paraText];
+      newParaList.push(paraObj);
+      this.setState({ paraText: newParaList });
+    }
+  }
+
 
   render() {
-    // In React we can also do inline-styling.For that we will have to create js object and then wrap dynamically 
-    // it with the style property provided by the JSX
-    //POINT TO REMEBER: We cannot use directly css property in the inline-style.We have to use the camelCase to define
-    //the style property or we have to wrap the property with the single and dbl commas and also the property value
-    //must be wrap with the single and dbl commas to render it on the UI
+    let paras = (
+      <div>
+        {
+          this.state.paraText.map((para, index) => {
+            return (
+              <UserOutput
+                compName={this.state.compName2}
+                paraText1={para.paraText1}
+                paraText2={para.paraText2}
+                edit={(event) => this.editParaText(event, para.id)}
+                removePara={() => this.removeParaText(para.id)}
+                key={para.id} />
+            )
+          })
+        }
+      </div>
+    )
 
-    const style = {
-      backgroundColor: '#10afa0',
-      font: 'inherit',
-      border: '1px solid #10afa0',
-      padding: '8px',
-      cursor: 'pointer'
-    }
-
-    //Whenever something is update in the state render methods render automatically.
-    let person = null;
-    if (this.state.showPersonList) {
-      person = (
-        <div>
-          {
-            this.state.persons.map((person,index) => {
-              return( 
-                <Person 
-                  name={person.name} 
-                  age={person.age} 
-                  key={person.id}
-                  click={() => this.deletePersonHandler(index)}
-                  changed={(event) => this.nameChangeHandler(event,person.id)}/>
-               )
-            })
-          }
-        </div>
-      )
-    }
-    
     return (
       <div className='App'>
         <h4>{this.state.title}</h4>
-        <button
-          style={style}
-          onClick={this.togglePersonComp}>Toggle Person
-        </button>
-        {person}
+        <UserInput
+          compName={this.state.compName1}
+          paraTitle={this.state.addingParaInputTitle}
+          changed={(event) => this.inputUserChanged(event)}
+          paraChanged={(event) => this.paraChanged(event)}
+          name={this.state.title} />
+        {paras}
       </div>
     )
   }
