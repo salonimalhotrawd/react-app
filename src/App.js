@@ -4,7 +4,7 @@ import Person from './Person/Person';
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-    background-color: ${props => props.alt ? 'green' : '#10afa0'};
+    background-color: ${props => props.alt == 'true' ? 'green' : '#10afa0'};
     color:white;
     font:inherit;
     border:1px solid #10afa0;
@@ -12,7 +12,7 @@ const StyledButton = styled.button`
     cursor:pointer;
 
     &:hover{
-      background-color: ${props => props.alt ? 'purple' : 'red'};;
+      background-color: ${props => props.alt == 'true' ? 'purple' : 'red'};;
       color:white;
     }
 `;
@@ -122,7 +122,7 @@ class App extends Component {
       <div className='App'>
         <span className={classes.join(' ')}>{this.state.title}</span>
         <br />
-        <StyledButton alt={this.state.showPersonList} onClick={this.togglePersonComp}>
+        <StyledButton alt={(this.state.showPersonList).toString()} onClick={this.togglePersonComp}>
           Toggle Persons
         </StyledButton>
         {person}
