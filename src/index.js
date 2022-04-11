@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App appTitle="React Series Complete Guide-2022"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

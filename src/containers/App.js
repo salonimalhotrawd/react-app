@@ -4,6 +4,10 @@ import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+  constructor(props){
+     super(props);
+     console.log('[app.js] constructor called');
+  }
   /**
    * State property is only access in the class based component
    */
@@ -15,6 +19,21 @@ class App extends Component {
     ],
     designation: 'My Designation is Senior Associate Lead',
     showPersonList: false
+  }
+
+  /**
+   * Get Derived State from State
+   * @param {*} props contains current properties
+   * @param {*} state contains component current state       
+   * @returns returns a new State
+   */
+  static getDerivedStateFromProps(props,state){
+    console.log('[app.js getDerivedStateFromProps called]', props);
+    return state;
+  }
+
+  componentDidMount(){
+    console.log('[app.js componentDidMount called]');
   }
 
   /**
@@ -57,6 +76,8 @@ class App extends Component {
   }
 
   render() {
+     console.log('[App.js render called]');
+
     // In React we can also do inline-styling.For that we will have to create js object and then wrap dynamically 
     // it with the style property provided by the JSX
     //POINT TO REMEBER: We cannot use directly css property in the inline-style.We have to use the camelCase to define
@@ -87,7 +108,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Cockpit
-          title={this.state.title}
+          title={this.props.appTitle}
           style={style}
           clicked={this.togglePersonComp} />
         {person}
