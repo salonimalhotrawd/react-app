@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 import styled from "styled-components";
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const StyledButton = styled.button`
     background-color: ${props => props.alt == 'true' ? 'green' : '#10afa0'};
@@ -98,17 +99,19 @@ class App extends Component {
     if (this.state.showPersonList) {
       person = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            changed={this.nameChangedHandler} />
+          <ErrorBoundary>
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age}
+              changed={this.nameChangedHandler} />
 
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
-            {this.state.designation}
-          </Person>
+            <Person
+              name={this.state.persons[1].name}
+              age={this.state.persons[1].age}
+              click={this.switchCaseHandler.bind(this, 'Anmol!!!!')}>
+              {this.state.designation}
+            </Person>
+          </ErrorBoundary>
         </div>
       )
     }
