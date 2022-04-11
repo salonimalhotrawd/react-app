@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
   /**
@@ -9,8 +10,8 @@ class App extends Component {
   state = {
     title: 'React Complete Guide - 2022',
     persons: [
-      { id:'1', name: 'Saloni Malhotra', age: 27 },
-      { id:'2', name: 'Anmol Dogra', age: 28 }
+      { id: '1', name: 'Saloni Malhotra', age: 27 },
+      { id: '2', name: 'Anmol Dogra', age: 28 }
     ],
     designation: 'My Designation is Senior Associate Lead',
     showPersonList: false
@@ -29,14 +30,14 @@ class App extends Component {
    * @method nameChangeHandler
    * nameChangeHandler method and update the state
   */
-  nameChangeHandler = (event,id) => {
-    const personIndex = this.state.persons.findIndex((person) => {return person.id == id});
-    if(personIndex >= 0){
-      let person = {...this.state.persons[personIndex]};
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex((person) => { return person.id == id });
+    if (personIndex >= 0) {
+      let person = { ...this.state.persons[personIndex] };
       person.name = event.target.value;
       let originalPersons = [...this.state.persons]
       originalPersons[personIndex] = person;
-      this.setState({persons:originalPersons});
+      this.setState({ persons: originalPersons });
     }
   }
 
@@ -51,8 +52,8 @@ class App extends Component {
 
     //const persons = this.state.persons.slice;
     const persons = [...this.state.persons];
-    persons.splice(personIndex,1);
-    this.setState({persons:persons});
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
   render() {
@@ -75,29 +76,20 @@ class App extends Component {
     if (this.state.showPersonList) {
       person = (
         <div>
-          {
-            this.state.persons.map((person,index) => {
-              return( 
-                <Person 
-                  name={person.name} 
-                  age={person.age} 
-                  key={person.id}
-                  click={() => this.deletePersonHandler(index)}
-                  changed={(event) => this.nameChangeHandler(event,person.id)}/>
-               )
-            })
-          }
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangeHandler} />
         </div>
       )
     }
-    
+
     return (
       <div className='App'>
-        <h4>{this.state.title}</h4>
-        <button
+        <Cockpit
+          title={this.state.title}
           style={style}
-          onClick={this.togglePersonComp}>Toggle Person
-        </button>
+          clicked={this.togglePersonComp} />
         {person}
       </div>
     )
