@@ -32,6 +32,10 @@ class App extends Component {
     return state;
   }
 
+  // componentWillMount(){
+  //   console.log('[app.js componentWillMount called]');
+  // }
+
   componentDidMount(){
     console.log('[app.js componentDidMount called]');
   }
